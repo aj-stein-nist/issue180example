@@ -1,0 +1,42 @@
+{
+  "name": "saxonjs-example",
+  "version": "0.0.1",
+  "description": "A test program to XSLT accumulator test to validate SaxonJS bug.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "nodemon src/index.ts",
+    "test": "npm run build && node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aj-stein-nist/issue180example.git"
+  },
+  "keywords": [
+    "saxonjs",
+    "saxon",
+    "xslt"
+  ],
+  "author": "Alexander Stein <alexander.stein@nist.gov>",
+  "license": "NIST-PD-fallback",
+  "bugs": {
+    "url": "https://github.com/aj-stein-nist/issue180example/issues"
+  },
+  "homepage": "https://github.com/aj-stein-nist/issue180example#readme",
+  "dependencies": {
+    "saxon-js": "^2.3.0",
+    "xslt3": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.18",
+    "nodemon": "^2.0.15",
+    "ts-lint": "^4.5.1",
+    "ts-node": "^10.5.0"
+  },
+  "nodemonConfig": {
+    "watch": "src/**/*.ts",
+    "execMap": {
+      "ts": "ts-node"
+    }
+  }
+}

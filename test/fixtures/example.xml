@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<example>
+    <type1 name="item1">red</type1>
+    <type1 name="item2">blue</type1>
+    <type2 name="item3">green</type2>
+    <type3 name="item4">blue</type3>
+</example>
