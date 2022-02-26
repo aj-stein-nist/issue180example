@@ -8,29 +8,27 @@
     version="3.0">
     
     <xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
-    <xsl:mode use-accumulators="#all"/>
-    
-    <xsl:accumulator name="total-items" as="map(xs:string, xs:integer)" initial-value="map{}" streamable="no">
-        <xsl:accumulator-rule match="/example/*">
-            <xsl:variable name="key" select="(@name,.) => string-join(':')"/>
-            <xsl:choose>
-                <xsl:when test="map:contains($value, $key)">
-                    <xsl:sequence select="map:put($value, string($key), $value($key)+1)"></xsl:sequence>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:sequence select="map:put($value, string($key), 1)"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:accumulator-rule>
-    </xsl:accumulator>
-    
-    <xsl:variable name="total-items-count" select="accumulator-after('total-items')"/>
     
     <xsl:template match="/">
-        <query type="sums">
-            <xsl:for-each select="map:keys($total-items-count)">
-                <sum key="{.}" count="{ map:get($total-items-count, .) }"/>
-            </xsl:for-each>
-        </query>
+        <xsl:iterate select="/example/*">
+            <xsl:param name="totals" as="map(xs:string, xs:integer)" select="map{}"/>
+            <xsl:on-completion>
+                <query type="sums">
+                    <xsl:for-each select="map:keys($totals)">
+                        <sum key="{.}" count="{ map:get($totals, .) }"/>
+                    </xsl:for-each>
+                </query>
+            </xsl:on-completion>
+            <xsl:variable name="key" select="(@name,.) => string-join(':')"/>
+            <xsl:variable name="new-totals" as="map(xs:string, xs:integer)" select="
+                if (map:contains($totals, $key))
+                then
+                map:put($totals, string($key), $totals($key)+1)
+                else
+                map:put($totals, string($key), 1)"/>
+            <xsl:next-iteration>
+                <xsl:with-param name="totals" select="$new-totals"/>
+            </xsl:next-iteration>
+        </xsl:iterate>
     </xsl:template>
 </xsl:stylesheet>
