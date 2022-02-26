@@ -13,7 +13,7 @@
     
     <xsl:accumulator name="example:total-items" as="map(xs:string, xs:integer)" initial-value="map{}" streamable="no">
         <xsl:accumulator-rule match="/example/*">
-            <xsl:variable name="key" select="(name(.), @_key-ref) => string-join('#')"/>
+            <xsl:variable name="key" select="(@name,.) => string-join(':')"/>
             <xsl:choose>
                 <xsl:when test="map:contains($value, $key)">
                     <xsl:sequence select="map:put($value, string($key), $value($key)+1)"></xsl:sequence>
@@ -25,9 +25,8 @@
         </xsl:accumulator-rule>
     </xsl:accumulator>
     
-    <xsl:variable name="total-items-count" select="accumulator-after('example:total-items')"/>
-    
     <xsl:template match="/">
+        <xsl:variable name="total-items-count" select="accumulator-after('example:total-items')"/>
         <query type="sums">
             <xsl:for-each select="map:keys($total-items-count)">
                 <sum key="{.}" count="{ map:get($total-items-count, .) }"/>
