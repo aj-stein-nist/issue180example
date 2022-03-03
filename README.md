@@ -1,6 +1,6 @@
 # issue180example
 
-This is a collection of sample applications to reproduce bug report in issue [#180](https://github.com/usnistgov/metaschema/issues/180) for Metaschema, a development tool NIST uses to make [OSCAL](https://pages.nist.gov/OSCAL).
+This is a collection of sample applications to reproduce bug report in issue [#180](https://github.com/usnistgov/metaschema/issues/180) for Metaschema, a development tool NIST uses to make [OSCAL](https://pages.nist.gov/OSCAL). The [bug was reported upstream to Saxonica developers in issue 5338](https://saxonica.plan.io/issues/5338). A fix has been committed and further debug tests are not needed. This project is now archived.
 
 This exhibits a potential bug in the SaxonJS library in its implementation and support of the [`accumulator-after` function](https://www.saxonica.com/html/documentation10/functions/fn/accumulator-after.html) of the [XSLT 3.0 specification](https://www.w3.org/TR/xslt-30/#accumulators).
 
